@@ -1,1 +1,0 @@
-This repository is a collection of multiple controls software, motor, switching converters, battery and vehicle models. I developed these models for personal learning by following online courses, research papers or books.
