@@ -1,0 +1,5 @@
+1. Even though the major part of the code was developed from scratch, there are parts of code in system identification of Li-Ion cell,
+which were taken from Dr. Gregory Plett(UCCS) codes, and there is no intention of infringement.
+2. All the simulink models of cells and Kalman filter are completely novel and author holds the copyright to them.
+3. Data for LG and Samsung cells used for study is aviavlble online.
+4. Go through the presentation to get a summary of the work.
