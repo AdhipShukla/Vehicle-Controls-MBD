@@ -1,21 +1,21 @@
 clear;
 
 % decalaring data for torque and power calculation
-Mv=1310;
-delta=1.08;     %mass factor of the car
+Mv=1666.5;
+delta=1.097;     %mass factor of the car
 M_eq=delta*Mv;
-Gr=9;           %fixed gear ratio
+Gr=10;           %fixed gear ratio
 fr=0.015;       %rolling resistyance constant
-Cd=0.25;        %Aerodynamics drag
-Af=2;           %frontal area
-r=(15*0.0254+(2*0.155*0.6))/2;   % tire size 155/60R15
-nu=0.9;         %efficiency
+Cd=0.4;        %Aerodynamics drag
+Af=1.53*1.84;           %frontal area
+r=.35;%(12*0.0254+(2*0.175*0.55))/2;   % tire size 155/60R15
+nu=0.90;         %efficiency
 v_wind=0;
 
 %decalaring constants
 g=9.81;
 rho=1.2;       %air density
-grade=0.06;    % 6% grade means 6m rise in every 100 m of horizontal distance
+grade=0.0;    % 6% grade means 6m rise in every 100 m of horizontal distance
 
 %conversion factors
 mph2mps=1.6/3.6;
@@ -26,9 +26,9 @@ kmph2mps=1/3.6;
 %performace data
 v_safe=160*kmph2mps;     %160kmph   
 vgrade=60*kmph2mps;      %60kmph           
-vacc=100*1*kmph2mps;     %100kmph for vrated reduced to 75% increase vacc by 4.5% || for vrated reduced to 65% increase vacc by 10.5% || for vrated reduced to 50% increase vacc by 27.5%
-v_rated=100*1*kmph2mps;  %100kmph
-t_acc=12;
+vacc=100*1.105*kmph2mps;     %100kmph for vrated reduced to 75% increase vacc by 4.5% || for vrated reduced to 65% increase vacc by 10.5% || for vrated reduced to 50% increase vacc by 27.5%
+v_rated=100*.65*kmph2mps;  %100kmph      105kmph and 73kmph
+t_acc=10;
 
 % calculating torque required at maximum aceeleration on level road
 Faero=0.5*Cd*Af*rho*(vacc+v_wind)^2;
@@ -58,7 +58,7 @@ dT=0.1;            % 0.1 sec time step
 
 for n=1:150
     v(n+1)= v(n)+ dT*(k2-(k1*(v(n)+v_wind)^2));
-    if t(n)==12
+    if t(n)==10
         QQ=n;
     end
 end
@@ -97,11 +97,11 @@ for ii=1:400
         T(ii)=Fte*r/Gr/nu;
         P(ii)=v_ctp(ii)*Fte;
         kk=ii;
-    elseif v_ctp(ii)>=v_safe % natural characteristics region
-        velo_fac=v_ctp(ii)/v_ctp(jj); % factor by which velocity is increasing after constant power mode
-        P(ii)=P(jj)/(velo_fac)^7;
-        v_ctp(ii+1)=v_ctp(ii)+dT*((P(ii)/M_eq/v_ctp(ii))+k2_cp-(k1*(v_ctp(ii)+v_wind)^2));
-        T(ii)=P(ii)/v_ctp(ii)*r/Gr/nu; %torque decresing inversly to the velocity
+%     elseif v_ctp(ii)>=v_safe % natural characteristics region
+%         velo_fac=v_ctp(ii)/v_ctp(jj); % factor by which velocity is increasing after constant power mode
+%         P(ii)=P(jj)/(velo_fac)^7;
+%         v_ctp(ii+1)=v_ctp(ii)+dT*((P(ii)/M_eq/v_ctp(ii))+k2_cp-(k1*(v_ctp(ii)+v_wind)^2));
+%         T(ii)=P(ii)/v_ctp(ii)*r/Gr/nu; %torque decresing inversly to the velocity
        
     else  % constant power region
         v_ctp(ii+1)=v_ctp(ii)+dT*((k3/v_ctp(ii))+k2_cp-(k1*(v_ctp(ii)+v_wind)^2));
@@ -133,7 +133,7 @@ end
  P_motor_kw=P_motor*.001;
  fprintf('The maximum motor power required for this performance is %d kw \n',P_motor_kw(kk));
  fprintf('The energy required for accelerating the vehicle to maximum speed is %d kwhr \n',E_max);
- V_12s=v_ctp(121)
+ V_10s=v_ctp(100)
  
 %plotting velo
 figure(1);
