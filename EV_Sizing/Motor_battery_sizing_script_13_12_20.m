@@ -92,7 +92,6 @@ Range=105;
 
 %running our vehicle model calculate the avg consumption of energy per km
 %for WLTP3 cycle
-%run('C:\Users\hp\Desktop\Project\skill_Lync\complete_vehicle_simple_forward_reverse_23_12_20.slx');
 %Avg=Avg_cons;
 Avg=170;
 fprintf('Energy consumed per km = %d W-hr/km\n',Avg);
